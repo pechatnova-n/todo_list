@@ -6,6 +6,7 @@ const todoCompleted = document.querySelector('.todo-completed');
 
 const toDoData = [];
 
+
 const render = function () {
     todoList.innerHTML = '';
     todoCompleted.innerHTML = '';
@@ -30,8 +31,21 @@ const render = function () {
             item.completed = !item.completed;
             render();
         })
+
+        li.querySelector('.todo-remove').addEventListener('click', function () {
+            let ind = toDoData.findIndex((item, index) => index)
+            toDoData.splice(toDoData[ind], 1)
+            render();
+        })
     })
 
+    localStorage.setItem('tasks', JSON.stringify(toDoData));
+
+}
+
+if(localStorage.getItem('tasks')) {
+    toDoData.push(...JSON.parse(localStorage.getItem('tasks')));
+    render();
 }
 
 todoControl.addEventListener('submit', function (e) {
@@ -42,8 +56,9 @@ todoControl.addEventListener('submit', function (e) {
         completed: false
     }
 
-    toDoData.push(newToDo);
-    headerInput.value = '';
-    render();
-
+    if(newToDo.text.trim() != "") {
+        toDoData.push(newToDo);
+        headerInput.value = '';
+        render();
+    }
 })
