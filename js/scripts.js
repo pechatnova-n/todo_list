@@ -4,7 +4,7 @@ const todoList = document.querySelector('.todo-list');
 const todoCompleted = document.querySelector('.todo-completed');
 
 
-const toDoData = [];
+const toDoData = JSON.parse(localStorage.getItem('tasks')) || [];
 
 
 const render = function () {
@@ -43,10 +43,6 @@ const render = function () {
 
 }
 
-if(localStorage.getItem('tasks')) {
-    toDoData.push(...JSON.parse(localStorage.getItem('tasks')));
-    render();
-}
 
 todoControl.addEventListener('submit', function (e) {
     e.preventDefault();
